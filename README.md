@@ -4,6 +4,6 @@
 
 使用方法过于简单，不再赘述。
 
-初步加入随机，AI请等下次
+初步加入“入门级AI”，“普通级AI”、“提高级AI”请等下次
 
 [在线试玩](https://yyhhenry.github.io/gomoku)

@@ -171,6 +171,12 @@ Chess=function(element){
 				}
 			}
 		}
+		if(blackChessmen.length!=0){
+			v[blackChessmen[blackChessmen.length-1].getX()][blackChessmen[blackChessmen.length-1].getY()].style.background='rgb(50,50,20)';
+		}
+		if(whiteChessmen.length!=0){
+			v[whiteChessmen[whiteChessmen.length-1].getX()][whiteChessmen[whiteChessmen.length-1].getY()].style.background='rgb(255,200,200)';
+		}
 	}
 	
 	this.draw();
