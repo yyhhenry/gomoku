@@ -91,19 +91,19 @@ Chess=function(element){
 		if(winner!=null)return;
 		let chessman=dofunc(whiteChessmen,blackChessmen);
 		if(chessman.fail()){
-			aet('白棋子下在了棋盘外','white');
+			aet('白棋子下在了棋盘外 点此重开一局','white');
 			winner='black';
 		}else if(this.hasSet(chessman)){
-			aet('白棋子下在了其他棋子上','white');
+			aet('白棋子下在了其他棋子上 点此重开一局','white');
 			winner='black';
 		}else{
 			whiteChessmen[whiteChessmen.length]=chessman;
 			if(this.iswin(whiteChessmen)){
 				winner='white';
-				aet('白方胜利','white');
+				aet('白方胜利 点此重开一局','white');
 			}else if(whiteChessmen.length+blackChessmen.length==13*13){
 				winner='none';
-				aet('下满-平局','white');
+				aet('下满-平局 点此重开一局','white');
 			}
 			this.draw();
 		}
@@ -112,19 +112,19 @@ Chess=function(element){
 		if(winner!=null)return;
 		let chessman=dofunc(blackChessmen,whiteChessmen);
 		if(chessman.fail()){
-			aet('黑棋子下在了棋盘外','black');
+			aet('黑棋子下在了棋盘外 点此重开一局','black');
 			winner='white';
 		}else if(this.hasSet(chessman)){
-			aet('黑棋子下在了其他棋子上','black');
+			aet('黑棋子下在了其他棋子上 点此重开一局','black');
 			winner='white';
 		}else{
 			blackChessmen[blackChessmen.length]=chessman;
 			if(this.iswin(blackChessmen)){
 				winner='black';
-				aet('黑方胜利','black');
+				aet('黑方胜利 点此重开一局','black');
 			}else if(whiteChessmen.length+blackChessmen.length==13*13){
 				winner='none';
-				aet('下满-平局','black');
+				aet('下满-平局 点此重开一局','black');
 			}
 			this.draw();
 		}
@@ -183,10 +183,10 @@ let blackTurn;
 let popup=document.getElementById('popup');
 popup.innerHTML='';
 let aselect=document.createElement('select');
-aselect.innerHTML='<option value=\'rand\'>黑随机</option><option value=\'people\'>黑玩家</option>';
+aselect.innerHTML='<option value=\'入门\'>黑入门</option><option value=\'玩家\'>黑玩家</option>';
 popup.append(aselect);
 let bselect=document.createElement('select');
-bselect.innerHTML='<option value=\'rand\'>白随机</option><option value=\'people\'>白玩家</option>';
+bselect.innerHTML='<option value=\'入门\'>白入门</option><option value=\'玩家\'>白玩家</option>';
 popup.append(bselect);
 let button=document.createElement('button');
 button.innerText='OK';
@@ -197,14 +197,25 @@ button.onclick=function(){
 	document.getElementById('mp').style.display='block';
 	doblack=aselect.value;
 	dowhite=bselect.value;
-	setInterval(function(){
+	let pu=false;
+	let cl=false;
+	document.getElementById('tip').onclick=function(){
+		if(pu)cl=true;
+	}
+	let interval=setInterval(function(){
 		if(chess==null||chess.getWinner()!=null){
 			if(chess!=null){
-				alert('开始新的回合');
+				pu=true;
+				if(cl){
+					pu=false;
+					cl=false;
+					chess=null;
+				}
+			}else{
+				chess=new Chess(document.getElementById('chess'));
+				blackTurn=true;
+				aet('黑方氪命中','black');
 			}
-			chess=new Chess(document.getElementById('chess'));
-			blackTurn=true;
-			aet('黑方氪命中','black');
 		}else{
 			if(blackTurn){
 				if(doblack=='people'&&lastClick==null)return;
