@@ -23,8 +23,8 @@ let scripts={
 					x+=px[pi];
 					y+=py[pi];
 				}
-				if(x>0&&x<14&&y>0&&y<14&&chessground[x][y]==0){
-					p=1;
+				if(t==2&&x>0&&x<14&&y>0&&y<14&&chessground[x][y]==null){
+					p++;
 				}
 				x=i-px[pi];
 				y=j-py[pi];
@@ -33,16 +33,15 @@ let scripts={
 					x-=px[pi];
 					y-=py[pi];
 				}
-				if(x>0&&x<14&&y>0&&y<14&&chessground[x][y]==0){
-					p=1;
+				if(t==2&&x>0&&x<14&&y>0&&y<14&&chessground[x][y]==null){
+					p++;
 				}
 				tot=tot*2+p;
 				if(tot>mx)mx=tot;
 			}
-			if(i==7&&j==8)console.log(t,mx);
 			return mx;
 		}
-		for(let v=9;v>=1;v--){
+		for(let v=10;v>=1;v--){
 			let tot=[];
 			for(let i=1;i<=13;i++){
 				for(let j=1;j<=13;j++){
