@@ -3,11 +3,21 @@
 	<head>
 		<meta charset='utf-8'>
 		<title>gomoku-yyh</title>
+		<style>
+			.noselect {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+		</style>
 	</head>
-	<body style='background:gray'>
+	<body style='background:gray' class='noselect'>
 		<div id='popup' style='position:fixed;left:30%;right:30%;top:30%;height:auto;background:rgb(230,230,255);padding:20px;border-radius:20px'></div>
 		<div id='mp' style='display:none'>
-			<div id='tip' style='font-size:30px'></div>
+			<div id='tip' style='font-size:30px;cursor:pointer'></div>
 			<div id='chess' style='position:absolute;top:70px;left:20%;width:60%'></div>
 		</div>
 		<script src='./js/scripts.js'></script>
