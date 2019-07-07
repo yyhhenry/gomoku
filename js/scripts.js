@@ -23,7 +23,7 @@ let scripts={
 					x+=px[pi];
 					y+=py[pi];
 				}
-				if(t==2&&x>0&&x<14&&y>0&&y<14&&chessground[x][y]==null){
+				if(x>0&&x<14&&y>0&&y<14&&chessground[x][y]==null){
 					p++;
 				}
 				x=i-px[pi];
@@ -33,7 +33,7 @@ let scripts={
 					x-=px[pi];
 					y-=py[pi];
 				}
-				if(t==2&&x>0&&x<14&&y>0&&y<14&&chessground[x][y]==null){
+				if(x>0&&x<14&&y>0&&y<14&&chessground[x][y]==null){
 					p++;
 				}
 				tot=tot*3+p;
@@ -41,27 +41,41 @@ let scripts={
 			}
 			return mx;
 		}
-		for(let v=15;v>=3;v--){
+		let q1=[];
+		let q2=[];
+		for(let i=1;i<=13;i++){
+			q1[i]=[];
+			q2[i]=[];
+			for(let j=1;j<=13;j++){
+				q1[i][j]=q(i,j,1);
+				q2[i][j]=q(i,j,2);
+			}
+		}
+		for(let v=12;v>=1;v--){
 			let tot=[];
-			for(let i=1;i<=13;i++){
-				for(let j=1;j<=13;j++){
-					if(q(i,j,1)>=v){
-						tot.push(new Chessman(i,j));
+			for(let g=2;g>=0;g--){
+				for(let i=1;i<=13;i++){
+					for(let j=1;j<=13;j++){
+						if(q1[i][j]>=3*v+g){
+							tot.push(new Chessman(i,j));
+						}
 					}
 				}
-			}
-			if(tot.length!=0){
-				return tot[Math.round(Math.random()*(tot.length-1))];
-			}
-			for(let i=1;i<=13;i++){
-				for(let j=1;j<=13;j++){
-					if(q(i,j,2)>=v){
-						tot.push(new Chessman(i,j));
-					}
+				if(tot.length!=0){
+					return tot[Math.round(Math.random()*(tot.length-1))];
 				}
 			}
-			if(tot.length!=0){
-				return tot[Math.round(Math.random()*(tot.length-1))];
+			for(let g=2;g>=0;g--){
+				for(let i=1;i<=13;i++){
+					for(let j=1;j<=13;j++){
+						if(q2[i][j]>=3*v+g){
+							tot.push(new Chessman(i,j));
+						}
+					}
+				}
+				if(tot.length!=0){
+					return tot[Math.round(Math.random()*(tot.length-1))];
+				}
 			}
 		}
 		return new Chessman(7,7);
