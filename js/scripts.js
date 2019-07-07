@@ -36,12 +36,12 @@ let scripts={
 				if(t==2&&x>0&&x<14&&y>0&&y<14&&chessground[x][y]==null){
 					p++;
 				}
-				tot=tot*2+p;
+				tot=tot*3+p;
 				if(tot>mx)mx=tot;
 			}
 			return mx;
 		}
-		for(let v=10;v>=1;v--){
+		for(let v=15;v>=3;v--){
 			let tot=[];
 			for(let i=1;i<=13;i++){
 				for(let j=1;j<=13;j++){
