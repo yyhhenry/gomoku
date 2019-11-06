@@ -1,14 +1,16 @@
 let scripts={
-	入门:(function(myChessmen,otherChessmen){
-		let chessground=[[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
-		for(let i=0;i<myChessmen.length;i++){
-			chessground[myChessmen[i].getX()][myChessmen[i].getY()]=1;
+	入门:(function(chessground,mt){
+		let dmt;
+		if(mt=='black'){
+			dmt='white';
+		}else{
+			dmt='black';
 		}
-		for(let i=0;i<otherChessmen.length;i++){
-			chessground[otherChessmen[i].getX()][otherChessmen[i].getY()]=2;
+		let fin=function(x,y,t){
+			return x>=0&&x<13&&y>=0&&y<13&&chessground[x][y]==t;
 		}
 		let q=function(i,j,t){
-			if(chessground[i][j]!=null)return 0;
+			if(chessground[i][j]!='none')return 0;
 			let px=[ 0,-1,-1,-1];
 			let py=[-1, 0,-1,+1];
 			let mx=0;
@@ -18,22 +20,22 @@ let scripts={
 				let p=0;
 				x=i+px[pi];
 				y=j+py[pi];
-				while(x>0&&x<14&&y>0&&y<14&&chessground[x][y]==t){
+				while(fin(x,y,t)){
 					tot++;
 					x+=px[pi];
 					y+=py[pi];
 				}
-				if(x>0&&x<14&&y>0&&y<14&&chessground[x][y]==null){
+				if(fin(x,y,'none')){
 					p++;
 				}
 				x=i-px[pi];
 				y=j-py[pi];
-				while(x>0&&x<14&&y>0&&y<14&&chessground[x][y]==t){
+				while(fin(x,y,t)){
 					tot++;
 					x-=px[pi];
 					y-=py[pi];
 				}
-				if(x>0&&x<14&&y>0&&y<14&&chessground[x][y]==null){
+				if(fin(x,y,'none')){
 					p++;
 				}
 				tot=tot*3+p;
@@ -43,30 +45,30 @@ let scripts={
 		}
 		let q1=[];
 		let q2=[];
-		for(let i=1;i<=13;i++){
+		for(let i=0;i<13;i++){
 			q1[i]=[];
 			q2[i]=[];
-			for(let j=1;j<=13;j++){
-				q1[i][j]=q(i,j,1);
-				q2[i][j]=q(i,j,2);
+			for(let j=0;j<13;j++){
+				q1[i][j]=q(i,j,mt);
+				q2[i][j]=q(i,j,dmt);
 			}
 		}
 		for(let v=12;v>=3;v--){
 			let tot=[];
-			for(let i=1;i<=13;i++){
-				for(let j=1;j<=13;j++){
+			for(let i=0;i<13;i++){
+				for(let j=0;j<13;j++){
 					if(q1[i][j]>=v){
-						tot.push(new Chessman(i,j));
+						tot.push({x:i,y:j});
 					}
 				}
 			}
 			if(tot.length!=0){
 				return tot[Math.round(Math.random()*(tot.length-1))];
 			}
-			for(let i=1;i<=13;i++){
-				for(let j=1;j<=13;j++){
+			for(let i=0;i<13;i++){
+				for(let j=0;j<13;j++){
 					if(q2[i][j]>=v){
-						tot.push(new Chessman(i,j));
+						tot.push({x:i,y:j});
 					}
 				}
 			}
@@ -74,7 +76,6 @@ let scripts={
 				return tot[Math.round(Math.random()*(tot.length-1))];
 			}
 		}
-		return new Chessman(7,7);
-	}),
-	玩家:(function(){return lastClick;})
+		return {x:6,y:6};
+	})
 };
