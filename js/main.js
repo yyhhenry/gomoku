@@ -95,28 +95,28 @@ CanvasChess=function(){
 	this.win=function(){
 		if(win!='none')return win;
 		let q1=function(i,j,t){
-			if(i<5)return false;
+			if(i<4)return false;
 			for(let k=0;k<5;k++){
 				if(val[i-k][j]!=t)return false;
 			}
 			return true;
 		}
 		let q2=function(i,j,t){
-			if(j<5)return false;
+			if(j<4)return false;
 			for(let k=0;k<5;k++){
 				if(val[i][j-k]!=t)return false;
 			}
 			return true;
 		}
 		let q3=function(i,j,t){
-			if(i<5||j<5)return false;
+			if(i<4||j<4)return false;
 			for(let k=0;k<5;k++){
 				if(val[i-k][j-k]!=t)return false;
 			}
 			return true;
 		}
 		let q4=function(i,j,t){
-			if(i<5||j>7)return false;
+			if(i<4||j>8)return false;
 			for(let k=0;k<5;k++){
 				if(val[i-k][j+k]!=t)return false;
 			}
