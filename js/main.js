@@ -187,7 +187,7 @@ CanvasChess=function(){
 				ctx.closePath();
 				ctx.fill();
 				if(i==last.x&&j==last.y&&bright){
-					ctx.fillStyle='rgb(128,128,128,0.3)';
+					ctx.fillStyle='rgb(238,50,238,0.3)';
 					ctx.fill();
 				}
 			}
