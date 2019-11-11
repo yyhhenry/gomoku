@@ -7,41 +7,42 @@ let scripts={
 			dmt='black';
 		}
 		let fin=function(x,y,t){
-			return x>=0&&x<13&&y>=0&&y<13&&chessground[x][y]==t;
+			return x>=0&&x<13&&y>=0&&y<13&&(chessground[x][y]==t||chessground[x][y]=='none');
+		}
+		let gp=function(x,y,t,px,py){
+			x=x+px;
+			y=y+py;
+			let ans={p:0,tot:0}
+			while(fin(x,y,t)&&ans.p<=4){
+				ans.p++;
+				if(chessground[x][y]==t&&ans.p-ans.tot<=1){
+					ans.tot++;
+				}
+				x+=px;
+				y+=py;
+			}
+			return ans;
 		}
 		let q=function(i,j,t){
 			if(chessground[i][j]!='none')return 0;
 			let px=[ 0,-1,-1,-1];
 			let py=[-1, 0,-1,+1];
-			let mx=0;
+			let mx=-1;
+			let cx=0;
 			for(let pi=0;pi<4;pi++){
-				let tot=0;
-				let x,y;
-				let p=0;
-				x=i+px[pi];
-				y=j+py[pi];
-				while(fin(x,y,t)){
-					tot++;
-					x+=px[pi];
-					y+=py[pi];
+				let a1=gp(i,j,t,px[pi],py[pi]);
+				let a2=gp(i,j,t,-px[pi],-py[pi]);
+				let tot=a1.tot+a2.tot;
+				if(a1.p+a2.p>=4){
+					if(tot>mx){
+						mx=tot;
+						cx=0;
+					}else if(tot==mx){
+						cx++;
+					}
 				}
-				if(fin(x,y,'none')){
-					p++;
-				}
-				x=i-px[pi];
-				y=j-py[pi];
-				while(fin(x,y,t)){
-					tot++;
-					x-=px[pi];
-					y-=py[pi];
-				}
-				if(fin(x,y,'none')){
-					p++;
-				}
-				tot=tot*3+p;
-				if(tot>mx)mx=tot;
 			}
-			return mx;
+			return mx*4+cx;
 		}
 		let q1=[];
 		let q2=[];
@@ -53,7 +54,9 @@ let scripts={
 				q2[i][j]=q(i,j,dmt);
 			}
 		}
-		for(let v=12;v>=3;v--){
+		console.log(q1);
+		console.log(q2);
+		for(let v=16;v>=4;v--){
 			let tot=[];
 			for(let i=0;i<13;i++){
 				for(let j=0;j<13;j++){
